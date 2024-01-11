@@ -10,3 +10,5 @@ Use two branches
 
 Develop - for creating changes
 Master for final changes -- submit a pull request to get to master branch
+
+pip install -r requirements.txt
