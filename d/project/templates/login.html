@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>{% block title %}{% endblock %}Predictive Roofing</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+        
+	</head>
+
+    <body>
+        <div class="container">
+            <div class="columns">
+                <div class="column is-6 is-offset-3">
+                    <h1 class="title">Login in</h1>
+
+                    <form method="post" action=".">
+                        {% csrf_token %}
+
+                        {{ form.as_p}}
+
+                        <div class="field">
+                            <div class="control">
+                                <button class="button is-success">Login in</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
