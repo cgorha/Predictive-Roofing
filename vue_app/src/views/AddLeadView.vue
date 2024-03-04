@@ -1,3 +1,3 @@
 <template>
-    <h1>Add Lead Page</h1>
+    <h1>add Lead</h1>
 </template>

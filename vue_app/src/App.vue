@@ -1,106 +1,80 @@
 <template>
-  <header>
-    <p><b>Dashboard</b></p>
-    <div class="searchBar">
-      <input type="text" placeholder="Search...">
-      <button type="submit" >Search</button>
-    </div>
-  </header>
-  <div class="sideNav">
-    <div class="logo">
-      <h1>Logo</h1>
-    </div>
-    <div class="overview">
-      <p>Overview</p>
-    </div>
-    <div class="nav">
-      <nav>
-        <router-link to="/">Dashboard</router-link>
-        <router-link to="/leads">Leads</router-link>
-        <router-link to="/messages">Messages</router-link>
-        <router-link to="/calendar">Calendar</router-link>
-        <router-link to="/addLead">Add Lead</router-link>
-      </nav>
-    </div>
-    <div class="bottomLinks">
-      <router-link to="/settings">Settings</router-link>
-      <router-link to="/login">Log Out</router-link>
-    </div>   
-  </div>
+  <div>
+    <!-- Navigation Bar -->
+    <nav class="navbar is-dark">
+      <div class="navbar-brand">
+        <a class="navbar-item">
+          <img class="logo" src="../public/logo.png">
+          Predictive Roofing
+        </a>
+        
+        
+      </div>
 
-  <footer class="footer">
-    <p>footer</p>
-  </footer>
-  
-  <router-view/>
+      <div id="main-navbar" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item">{{ $route.meta.title }}</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Columns -->
+    <div class="columns">
+      <!-- Sidebar -->
+      <div class="column is-2">
+        <aside class="menu">
+          <p class="menu-label">
+            Overview
+          </p>
+          <ul class="menu-list">
+            <li><router-link to="/dashboard" class ="menu-item">Dashboard</router-link></li>
+            <li><router-link to="/leads" class ="menu-item">Leads & Jobs</router-link></li>
+            <li><router-link to="/messages" class ="menu-item">Messages</router-link></li>
+            <li><router-link to="/calendar" class ="menu-item">Calendar</router-link></li>
+            <li><router-link to="/addLead" class ="menu-item">Add Lead</router-link></li>
+            <div class="last-menu-item">
+            <li><router-link to="/settings">Settings</router-link></li>
+            <li>
+              <form @submit.prevent="logout">
+                <button type="submit" class="button is-danger ">Log Out</button>
+              </form>
+            </li>
+            </div>
+          </ul>
+        </aside>
+      </div>
+
+      <!-- Main Content -->
+      <div class="column">
+        <router-view></router-view>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
+export default {
+  methods: {
+    logout() {
+      // Implement your logout logic here
+    },
+  },
+};
 </script>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<style scoped>
+/* Add your component-specific styles here */
+/* You can include Bulma styles specifically for this component */
+@import url('https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css');
+
+.menu-item {
+  margin-bottom: 1.0rem; /* Adjust the margin as needed */
 }
 
-.sideNav{
-  height: 90vh;
-  width: 200px;
-  position: fixed;
-  z-index:1;
-  overflow-x: hidden;
-  padding-top: 20px;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  
+.last-menu-item{
+  margin-top: 31.0rem;
 }
 
-.sideNav .logo,
-.sideNav .overview,
-.sideNav nav {
-  padding: 10px;
-}
 
-.sideNav .logo h1,
-.sideNav .overview p {
-  margin: 0;
-}
 
-.overview {
-  padding: 10px;
-  align-self: flex-start; 
-}
-
-nav {
-  color: black;
-  display: flex;
-  flex-direction: column;
-}
-
-.bottomLinks{
- display: flex;
- flex-direction: column;
- margin-top: auto;
-}
-
-header{
-  height: 50px;
-  background-color: white;
-  position: fixed;
-  width: 100%;
-  z-index: 0;
-  top: 0;
-  margin-left: 200px;
-  padding: 0px, 10px;
-  display: flex;
-}
-
-footer{
-    background-color: blue;
-}
 </style>
