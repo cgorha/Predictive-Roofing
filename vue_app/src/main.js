@@ -15,3 +15,7 @@ router.beforeEach((to, from, next) => {
   document.title = pageTitle;  
   next();
   });
+
+window.initMap = function() {
+  console.log('Map initialized');
+};
