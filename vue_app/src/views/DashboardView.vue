@@ -1,18 +1,26 @@
 <template>
 <div class="container">
   <div class="map">
-    <!-- Your map content goes here -->
-    <!-- You can embed a map component or any other content for the map -->
     Map Content
+      <GoogleMaps :mapOptions="{ zoom: 10, center: { lat: -33.8688, lng: 151.2093 } }"/>
   </div>
 
   <div class="legend">
-    <!-- Your legend content goes here -->
-    <!-- You can add legends, key information, or any other content related to the map -->
     Legend Content
   </div>
 </div>
 </template>
+
+<script>
+import GoogleMaps from '../components/googleMaps.vue';
+
+export default {
+    name: 'App',
+    components: {
+        GoogleMaps
+    }
+};
+</script>
 
 <style>
   .container {
