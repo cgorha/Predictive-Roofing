@@ -1,60 +1,48 @@
 <template>
-  <div>
-    <!-- Navigation Bar -->
-    <nav class="navbar is-dark">
-      <div class="navbar-brand">
-        <a class="navbar-item">
-          <img class="logo" src="../public/logo.png">
-          Predictive Roofing
-        </a>
-        
-        
-      </div>
-
-      <div id="main-navbar" class="navbar-menu">
-        <div class="navbar-start">
-          <a class="navbar-item">{{ $route.meta.title }}</a>
-        </div>
-      </div>
-    </nav>
-
-    <!-- Columns -->
-    <div class="columns">
-      <!-- Sidebar -->
-      <div class="column is-2">
-        <aside class="menu">
-          <p class="menu-label">
-            Overview
-          </p>
-          <ul class="menu-list">
-            <li><router-link to="/dashboard" class ="menu-item">Dashboard</router-link></li>
-            <li><router-link to="/leads" class ="menu-item">Leads & Jobs</router-link></li>
-            <li><router-link to="/messages" class ="menu-item">Messages</router-link></li>
-            <li><router-link to="/calendar" class ="menu-item">Calendar</router-link></li>
-            <li><router-link to="/addLead" class ="menu-item">Add Lead</router-link></li>
-            <div class="last-menu-item">
-            <li><router-link to="/settings">Settings</router-link></li>
-            <li>
-              <form @submit.prevent="logout">
-                <button type="submit" class="button is-danger ">Log Out</button>
-              </form>
-            </li>
+    <div>
+        <nav class="navbar is-dark">
+            <div class="navbar-brand">
+                <a class="navbar-item" @click.prevent="toggleNavigationDropdown">
+                    <img class="logo" src="../public/logo.png">
+                    Predictive Roofing
+                </a>
+                <NavigationDropDown :isOpen="isNavigationDropdownOpen" @update:isOpen="isNavigationDropdownOpen = $event"/>
             </div>
-          </ul>
-        </aside>
-      </div>
 
-      <!-- Main Content -->
-      <div class="column">
+            <div id="main-navbar" class="navbar-menu">
+                <div class="navbar-start">
+                    <a class="navbar-item">{{ $route.meta.title }}</a>
+                </div>
+            </div>
+
+            <div class="navbar-end">
+                <UserProfileOverLay :userName="'John Doe'" :profileImgUrl="profileImgUrl" />
+            </div>
+        </nav>
         <router-view></router-view>
-      </div>
     </div>
-  </div>
 </template>
 
 <script>
+
+import UserProfileOverLay from "@/components/UserProfileOverLay.vue";
+import NavigationDropDown from "@/components/NavigationDropDown.vue";
+
 export default {
+    components: {
+        UserProfileOverLay,
+        NavigationDropDown
+    },
+    data() {
+        return {
+            profileImgUrl: "https://cdn1.iconfinder.com/data/icons/avatar-2-2/512/Programmer-1024.png",
+            isNavigationDropdownOpen: false,
+        };
+    },
   methods: {
+      toggleNavigationDropdown() {
+          this.isNavigationDropdownOpen = !this.isNavigationDropdownOpen;
+      },
     logout() {
       // Implement your logout logic here
     },

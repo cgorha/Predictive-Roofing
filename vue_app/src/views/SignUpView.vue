@@ -116,3 +116,40 @@ export default {
   }
 }
 </script>
+<style scoped>
+    .page-sign-up {
+        background-color: #ffffff;
+    }
+
+    .title {
+        color: #363636;
+    }
+
+    .label {
+        color: #363636;
+    }
+
+    .input {
+        border-color: #363636;
+    }
+
+    .button.is-dark {
+        background-color: #363636;
+        color: #ffffff;
+    }
+
+    .notification.is-danger {
+        background-color: #f5f5f5;
+        color: #363636;
+        border-left-color: #363636;
+    }
+
+    hr {
+        border-color: #363636;
+    }
+
+    a.router-link {
+        color: #363636;
+        text-decoration: underline;
+    }
+</style>
