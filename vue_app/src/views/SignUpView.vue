@@ -12,6 +12,48 @@
                       </div>
                   </div>
 
+                  <div class="company">
+                        <label>Company Name</label>
+                        <div class="control">
+                            <input type="text" class="input" v-model="companyName">
+                        </div>
+                  </div>
+
+                  <div class="field">
+                      <label>Email</label>
+                      <div class="control">
+                          <input type="email" class="input" v-model="email">
+                      </div>
+                  </div>
+
+                  <div class="field">
+                      <label>Address</label>
+                      <div class="control">
+                          <input type="text" class="input" v-model="address">
+                      </div>
+                  </div>
+
+                  <div class="field">
+                        <label>City</label>
+                        <div class="control">
+                            <input type="tel" class="input" v-model="City">
+                        </div>
+                  </div>
+
+                  <div class = "field">
+                        <label>State</label>
+                        <div class="control">
+                            <input type="text" class="input" v-model="state">
+                        </div>
+                      </div>
+
+                  <div class="field">
+                        <label>Zip Code</label>
+                        <div class="control">
+                            <input type="text" class="input" v-model="zipCode">
+                        </div>
+                  </div>
+
                   <div class="field">
                       <label>Password</label>
                       <div class="control">
@@ -54,6 +96,12 @@ export default {
   data() {
       return {
           username: '',
+          email: '',
+          address: '',
+          city: '',
+          state: '',
+          zipCode: '',
+          companyName: '',
           password: '',
           password2: '',
           errors: []
@@ -81,6 +129,12 @@ export default {
           if (!this.errors.length) {
               const formData = {
                   username: this.username,
+                  email: this.email,
+                  address: this.address,
+                  city: this.city,
+                  state: this.state,
+                  zipCode: this.zipCode,
+                  companyName: this.companyName,
                   password: this.password
               }
 

@@ -20,6 +20,7 @@
             </div>
         </nav>
         <router-view></router-view>
+        <Footer />
     </div>
 </template>
 
@@ -27,11 +28,13 @@
 
 import UserProfileOverLay from "@/components/UserProfileOverLay.vue";
 import NavigationDropDown from "@/components/NavigationDropDown.vue";
+import Footer from "@/components/Footer.vue";
 
 export default {
     components: {
         UserProfileOverLay,
-        NavigationDropDown
+        NavigationDropDown,
+        Footer
     },
     data() {
         return {
@@ -51,12 +54,11 @@ export default {
 </script>
 
 <style scoped>
-/* Add your component-specific styles here */
-/* You can include Bulma styles specifically for this component */
+
 @import url('https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css');
 
 .menu-item {
-  margin-bottom: 1.0rem; /* Adjust the margin as needed */
+  margin-bottom: 1.0rem;
 }
 
 .last-menu-item{

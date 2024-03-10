@@ -30,7 +30,10 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+AUTH_USER_MODEL = "project.CustomUser"
+
 INSTALLED_APPS = [
+    "project",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -43,10 +46,12 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "corsheaders",
     "djoser",
+
 ]
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
+    "http://192.168.0.110:8080",
 ]
 
 WEBPACK_LOADER = {
@@ -129,6 +134,11 @@ USE_I18N = True
 
 USE_TZ = True
 
+DJOSER = {
+    'SERIALIZERS': {
+        'user_create': 'project.serializers.CustomUserCreateSerializer',
+    },
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
