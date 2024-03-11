@@ -8,7 +8,7 @@
                     <a href="/profile" class="dropdown-item">Profile</a>
                     <a href="/settings" class="dropdown-item">Settings</a>
                     <hr class="dropdown-divider">
-                    <a href="#" class="dropdown-item">Log out</a>
+                    <a class="dropdown-item" @click.prevent="logout">Log Out</a>
                 </div>
             </div>
         </div>
@@ -16,6 +16,8 @@
 </template>
 
 <script>
+import {mapActions} from "vuex";
+
 export default {
     props: {
         userName: String,
@@ -23,13 +25,14 @@ export default {
     },
     data() {
         return {
-            dropdownActive: false
+            dropdownActive: false,
         };
     },
     methods: {
         toggleDropdown() {
             this.dropdownActive = !this.dropdownActive;
-        }
+        },
+        ...mapActions(['logout']),
     }
 }
 </script>

@@ -10,7 +10,7 @@
                     <router-link to="/addLead" class="dropdown-item">Add Lead</router-link>
                     <router-link to="/settings" class="dropdown-item">Settings</router-link>
                     <hr class="dropdown-divider">
-                    <a class="dropdown-item" @click="logout">Log Out</a>
+                    <a class="dropdown-item" @click.prevent="logout">Log Out</a>
                 </div>
             </div>
         </div>
@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import {mapActions} from "vuex";
+
 export default {
     name: 'NavigationDropDown',
     props: {
@@ -41,7 +43,8 @@ export default {
             this.dropdownActive = !this.dropdownActive;
             // Emit an event to synchronize state with the parent component
             this.$emit('update:isOpen', this.dropdownActive);
-        }
+        },
+        ...mapActions(['logout']),
     }
 }
 </script>

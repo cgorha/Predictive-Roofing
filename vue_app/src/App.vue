@@ -16,12 +16,12 @@
             </div>
 
             <div class="navbar-end">
-                <UserProfileOverLay :userName="'John Doe'" :profileImgUrl="profileImgUrl" />
+                <UserProfileOverLay v-if="isAuthenticated" :userName="userName" :profileImgUrl="profileImgUrl" />
             </div>
         </nav>
         <router-view></router-view>
-        <Footer />
     </div>
+    <Footer />
 </template>
 
 <script>
@@ -30,11 +30,16 @@ import UserProfileOverLay from "@/components/UserProfileOverLay.vue";
 import NavigationDropDown from "@/components/NavigationDropDown.vue";
 import Footer from "@/components/Footer.vue";
 
+import {mapActions, mapState} from 'vuex';
+
 export default {
     components: {
         UserProfileOverLay,
         NavigationDropDown,
         Footer
+    },
+    created() {
+        this.fetchUser();
     },
     data() {
         return {
@@ -43,13 +48,17 @@ export default {
         };
     },
   methods: {
+      ...mapActions(['fetchUser']),
       toggleNavigationDropdown() {
           this.isNavigationDropdownOpen = !this.isNavigationDropdownOpen;
       },
-    logout() {
-      // Implement your logout logic here
-    },
   },
+    computed: {
+        ...mapState(['isAuthenticated', 'user']),
+        userName() {
+            return this.user?.username || 'Guest';
+        },
+    },
 };
 </script>
 

@@ -4,10 +4,6 @@
     Map Content
       <GoogleMaps :mapOptions="{ zoom: 10, center: { lat: -33.8688, lng: 151.2093 } }"/>
   </div>
-
-  <div class="legend">
-    Legend Content
-  </div>
 </div>
 </template>
 
