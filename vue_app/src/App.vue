@@ -2,7 +2,7 @@
     <div>
         <nav class="navbar is-dark">
             <div class="navbar-brand">
-                <a class="navbar-item" @click.prevent="toggleNavigationDropdown">
+                <a class="navbar-item" >
                     <img class="logo" src="../public/logo.png">
                     Predictive Roofing
                 </a>
@@ -10,7 +10,7 @@
             </div>
 
             <div id="main-navbar" class="navbar-menu">
-                <div class="navbar-start">
+                <div class="navbar-start" @click.prevent="toggleNavigationDropdown">
                     <a class="navbar-item">{{ $route.meta.title }}</a>
                 </div>
             </div>
