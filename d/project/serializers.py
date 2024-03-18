@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 
+from project.models import Lead
+
 User = get_user_model()
 
 class CustomUserCreateSerializer(serializers.ModelSerializer):
@@ -16,3 +18,9 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'company_name', 'address', 'city', 'state', 'zip_code']
+
+class LeadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Lead
+        fields = ['id', 'user', 'name', 'date', 'phone', 'zip_code', 'insurance_company', 'status']
+        read_only_fields = ('user',)
