@@ -100,7 +100,7 @@ export default {
           address: '',
           city: '',
           state: '',
-          zipCode: '',
+          zip_code: '',
           companyName: '',
           password: '',
           password2: '',
@@ -133,7 +133,7 @@ export default {
                   address: this.address,
                   city: this.city,
                   state: this.state,
-                  zipCode: this.zipCode,
+                  zip_code: this.zipCode,
                   companyName: this.companyName,
                   password: this.password
               }

@@ -9,11 +9,11 @@ from .serializers import UserSerializer, LeadSerializer
 User = get_user_model()
 class UserDetailAPIView(generics.RetrieveAPIView):
     permission_classes = [IsAuthenticated]
-    queryset = User.objects.all()
     serializer_class = UserSerializer
 
     def get_object(self):
         return self.request.user
+
 
 class LeadListCreate(generics.ListCreateAPIView):
     queryset = Lead.objects.all()
@@ -28,7 +28,6 @@ class LeadListCreate(generics.ListCreateAPIView):
         permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        # Return leads for the current user only
         return Lead.objects.filter(user=self.request.user)
 
 class LeadDetail(generics.RetrieveUpdateDestroyAPIView):

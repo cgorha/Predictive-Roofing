@@ -9,6 +9,7 @@ const store = createStore({
         user: null,
         userToken: localStorage.getItem('userToken') || null,
         isAuthenticated: !!localStorage.getItem('userToken'),
+        state: null,
     },
     mutations: {
         setUser(state, userData) {
@@ -50,7 +51,7 @@ const store = createStore({
             if (!state.userToken) return;
 
             try {
-                const response = await axios.get(`${API_BASE_URL}/users/me`, {
+                const response = await axios.get(`${API_BASE_URL}/hi`, {
                     headers: {
                         'Authorization': `Token ${state.userToken}`,
                     }
