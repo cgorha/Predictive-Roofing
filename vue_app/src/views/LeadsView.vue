@@ -1,18 +1,5 @@
 <template>
     <div class="table-container">
-        <form @submit.prevent="addLead" class="box">
-            <input v-model="newLead.name" placeholder="Name">
-            <input v-model="newLead.phone" placeholder="Phone">
-            <input v-model="newLead.date" type="date" placeholder="Date">
-            <input v-model="newLead.zip_code" placeholder="Zip Code">
-            <input v-model="newLead.insurance_company" placeholder="Insurance Company">
-            <select v-model="newLead.status">
-                <option value="Pending">Pending</option>
-                <option value="In Progress">In Progress</option>
-                <option value="Completed">Completed</option>
-            </select>
-            <button type="submit">Add Lead</button>
-        </form>
 
         <table>
             <thead>
