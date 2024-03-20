@@ -1,7 +1,7 @@
 <template>
     <footer class="footer">
         <div class="content has-text-centered">
-            Predictive Roofing, made by group 4
+            Predictive Roofing, made by group 3
         </div>
     </footer>
 </template>

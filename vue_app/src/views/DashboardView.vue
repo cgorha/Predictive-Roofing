@@ -1,7 +1,7 @@
 <template>
     <div class="dashboard-container">
         <section class="welcome-section">
-            <h1>Welcome Back, {{ userName }}</h1>
+            <h1>Welcome back, <strong>{{ userName }}</strong></h1>
             <p>Here's an overview of your day:</p>
         </section>
 
@@ -15,7 +15,7 @@
         </section>
 
         <section class="map-section">
-            <h2>Next Appointment Location</h2>
+            <h2>Weather and hail report for your location:</h2>
             <div class="google-map-container">
                 <GoogleMaps :zipCode="userZipCode" :mapOptions="{ zoom: 10, center: { lat: -33.8688, lng: 151.2093 } }"/>
             </div>
