@@ -1,13 +1,4 @@
-Group 4155 
-Cole Gorham
-
-Helen Cardoso
-
-Giselle Cabrejos
-
-Daniel Santos
-
-Keilor Solera
+Created by: Cole Gorham, Helen Cardoso, Giselle Cabrejos, Keilor Solera
 
 
 Use two branches 
@@ -51,7 +42,6 @@ https://nodejs.org/en/learn/getting-started/how-to-install-nodejs
 ```npm run serve```
 
 
-In order to run the project you have to run the front end in one terminal instance and the backend at the same time.
 
 
 
