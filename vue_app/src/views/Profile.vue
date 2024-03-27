@@ -1,8 +1,25 @@
 <template>
-    <h1 class="title has-text-centered">Update Profile</h1>
+    <h1 class="title has-text-centered">Profile Information</h1>
     <section class="section">
+        
+
+
         <div class="container">
+            <!-- User Information Box -->
             <div class="box">
+                <div class="user-info-box">
+                    <h2 class="title has-text-centered">User Information</h2>
+                    <div class="container">
+                        <p><strong>Company Name:</strong> {{ profile.companyName }}</p>
+                        <p><strong>Name:</strong> {{ profile.name }}</p>
+                        <p><strong>Email:</strong> {{ profile.email }}</p>
+                        <p><strong>Phone Number:</strong> {{ profile.phoneNumber }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box">
+                <h2 class="title has-text-centered">Update Profile Information</h2>
                 <form @submit.prevent="submitForm">
                     <div class="field">
                         <label class="label">Company Name</label>
@@ -60,6 +77,8 @@
 </template>
 
 <script>
+
+
 export default {
     data() {
         return {
@@ -71,6 +90,7 @@ export default {
                 imageName: '',
                 imageFile: null,
             },
+            
         };
     },
     methods: {
