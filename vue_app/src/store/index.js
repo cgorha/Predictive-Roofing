@@ -51,7 +51,7 @@ const store = createStore({
             if (!state.userToken) return;
 
             try {
-                const response = await axios.get(`${API_BASE_URL}/hi`, {
+                const response = await axios.get(`${API_BASE_URL}/hi/`, {
                     headers: {
                         'Authorization': `Token ${state.userToken}`,
                     }
