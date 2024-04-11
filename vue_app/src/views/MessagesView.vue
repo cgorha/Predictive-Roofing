@@ -18,6 +18,7 @@
   
   <script>
   import axios from 'axios';
+  import {mapState} from "vuex";
   
   export default {
     data() {
@@ -28,21 +29,22 @@
         csrfToken: ''
       };
     },
+      computed: {
+          ...mapState(['userToken']),
+      },
     mounted() {
-      // Fetch CSRF token from the input field
       this.csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
     },
     methods: {
       sendMessage() {
-        // Include CSRF token in the request headers
         const headers = {
-          'X-CSRFToken': this.csrfToken
+            'Authorization': `Token ${this.userToken}`
         };
   
-        axios.post('/messages/', {
+        axios.post('/api/messages/', {
           message: this.message,
           phone_number: this.phoneNumber
-        }, { headers }) // Pass headers object to the axios request
+        }, { headers })
         .then(response => {
           this.messageStatus = 'SMS sent successfully';
         })
