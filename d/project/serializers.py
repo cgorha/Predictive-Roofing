@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 
-from project.models import Lead
+from project.models import Lead, calendarEvent
 
 User = get_user_model()
 
@@ -24,4 +24,10 @@ class LeadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lead
         fields = ['id', 'user', 'name', 'date', 'phone', 'zip_code', 'insurance_company', 'status']
+        read_only_fields = ('user',)
+
+class calendarEventSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = calendarEvent
+        fields = ['id', 'user', 'title', 'start', 'description']
         read_only_fields = ('user',)

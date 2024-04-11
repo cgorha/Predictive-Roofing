@@ -5,12 +5,11 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
-from project.models import Lead
-from .serializers import UserSerializer, LeadSerializer
+from project.models import Lead, calendarEvent
+from .serializers import UserSerializer, LeadSerializer, calendarEventSerializer
 
 import os
 from django.conf import settings
-from twilio.rest import Client
 from django.http import HttpResponse
 
 User = get_user_model()
@@ -41,6 +40,21 @@ class LeadDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Lead.objects.all()
     serializer_class = LeadSerializer
     permission_classes = [IsAuthenticated]
+
+class calendarEventListCreate(generics.ListCreateAPIView):
+    queryset = calendarEvent.objects.all()
+    serializer_class = calendarEventSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+    class calendarEventListCreate(generics.ListCreateAPIView):
+        serializer_class = calendarEventSerializer
+        permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return calendarEvent.objects.filter(user=self.request.user)
 
 def send_sms(request):
     account_sid = settings.TWILIO_ACCOUNT_SID

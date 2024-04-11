@@ -37,7 +37,9 @@ export default {
         plugins: [dayGridPlugin],
         initialView: 'dayGridMonth',
         events: [
-          // Initial events data (can be empty)
+            { id: '1', title: 'Event 1', start: '2024-04-04', description: 'Description for Event 1' },
+            { id: '2', title: 'Event 2', start: '2024-04-08', description: 'Description for Event 2' },
+            { id: '3', title: 'Event 3', start: '2024-04-10', description: 'Description for Event 3' }
         ],
         eventClick: this.openEditEventPopup
       },

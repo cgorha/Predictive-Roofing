@@ -20,6 +20,14 @@ class Lead(models.Model):
     insurance_company = models.CharField(max_length=255)
     status = models.CharField(max_length=100)
 
+
+class calendarEvent(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='events')
+    id = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=255)
+    start = models.DateTimeField()
+    description = models.TextField()
+
     def __str__(self):
         return self.name
 
