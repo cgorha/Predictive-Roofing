@@ -3,6 +3,9 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+import axios from "axios";
+
 export default {
     name: 'GoogleMapsComponent',
     props: {
@@ -13,6 +16,7 @@ export default {
                 zoom: 10
             }),
         },
+        authToken: String,
     },
     data() {
         return {
@@ -20,74 +24,113 @@ export default {
         };
     },
     watch: {
-        zipCode: {
-            immediate: true,
-            handler(newVal, oldVal) {
-                if (newVal !== oldVal) {
-                    this.getLatLngFromZipCode(newVal).then(coords => {
-                        this.mapOptions.center = coords;
-                        if (this.map) {
-                            this.centerMap(coords.lat, coords.lng);
-                        } else {
-                            this.initMap();
-                        }
-                    }).catch(error => console.error('Error getting location from zip code:', error));
-                }
+        zipCode(newVal, oldVal) {
+            if (newVal !== oldVal) {
+                this.getLatLngFromZipCode(newVal).then(coords => {
+                    this.mapOptions.center = coords;
+                    if (this.map) {
+                        this.centerMap(coords.lat, coords.lng);
+                    } else {
+                        this.initMap();
+                    }
+                }).catch(error => console.error('Error getting location from zip code:', error));
             }
         }
     },
+    computed: {
+        ...mapState(['userToken']),
+    },
     mounted() {
         this.loadGoogleMapsScript().then(() => {
+            this.initMap().then(() => {
+                this.fetchAndDisplayPins();
+            });
         }).catch(error => console.error('Google Maps API script not loaded:', error));
     },
     methods: {
         getLatLngFromZipCode(zipCode) {
-            return new Promise((resolve, reject) => {
-                const apiKey = '';
-                const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${zipCode}&key=${apiKey}`;
-                console.log(zipCode)
-
-                fetch(url)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.results && data.results.length > 0) {
-                            const { lat, lng } = data.results[0].geometry.location;
-                            resolve({ lat, lng });
-                        } else {
-                            reject('No results found');
-                        }
-                    })
-                    .catch(error => reject(error));
-            });
+            const apiKey = ''; // Your API key here
+            const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${zipCode}&key=${apiKey}`;
+            return axios.get(url)
+                .then(response => {
+                    const { lat, lng } = response.data.results[0].geometry.location;
+                    return { lat, lng };
+                })
+                .catch(error => {
+                    throw new Error('No results found: ' + error);
+                });
         },
         loadGoogleMapsScript() {
             return new Promise((resolve, reject) => {
-                const apiKey = '';
+                const apiKey = ''; // Your API key here
                 if (window.google && window.google.maps) {
                     resolve();
                 } else {
-                    window.resolveGoogleMapsPromise = () => {
-                        resolve();
-                        delete window.resolveGoogleMapsPromise;
-                    };
-
                     const script = document.createElement('script');
-                    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=resolveGoogleMapsPromise`;
+                    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initMap`;
                     script.async = true;
                     document.head.appendChild(script);
+                    window.initMap = () => {
+                        resolve();
+                        delete window.initMap;
+                    };
                     script.onerror = reject;
                 }
             });
         },
         initMap() {
-            this.map = new google.maps.Map(this.$refs.googleMap, {
-                ...this.mapOptions,
-                center: this.mapOptions.center,
+            return new Promise(resolve => {
+                this.map = new google.maps.Map(this.$refs.googleMap, {
+                    ...this.mapOptions,
+                    center: this.mapOptions.center,
+                });
+                this.map.addListener('click', this.addMarker);
+                resolve();
             });
-            new google.maps.Marker({
-                position: this.mapOptions.center,
+        },
+        addMarker(event) {
+            const { lat, lng } = event.latLng.toJSON();
+            const marker = new google.maps.Marker({
+                position: { lat, lng },
                 map: this.map,
+                title: "New Pin"
             });
+            this.savePin(lat, lng);
+        },
+        fetchAndDisplayPins() {
+            axios.get('/api/v1/pins/', {
+                headers: { 'Authorization': `Token ${this.userToken}` }
+            })
+                .then(response => {
+                    response.data.forEach(pin => {
+                        this.addMarkerFromData(pin);
+                    });
+                })
+                .catch(error => console.error('Error fetching pins:', error));
+        },
+        addMarkerFromData(pin) {
+            const marker = new google.maps.Marker({
+                position: { lat: pin.latitude, lng: pin.longitude },
+                map: this.map,
+                title: pin.description || "No Description"
+            });
+        },
+        savePin(lat, lng) {
+            axios.post('/api/v1/save/', {
+                latitude: lat,
+                longitude: lng
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Token ${this.userToken}`
+                }
+            })
+                .then(response => {
+                    console.log('Pin saved:', response.data);
+                })
+                .catch(error => {
+                    console.error('Error saving pin:', error.response ? error.response.data : error);
+                });
         },
         centerMap(lat, lng) {
             this.map.panTo({ lat, lng });

@@ -31,4 +31,14 @@ class calendarEvent(models.Model):
     def __str__(self):
         return self.name
 
+class MapPin(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='map_pins')
+    address = models.CharField(max_length=255)
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+    description = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.address} ({self.latitude}, {self.longitude})"
+
 
