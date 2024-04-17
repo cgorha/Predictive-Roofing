@@ -26,6 +26,7 @@
 <script>
 import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
+import axios from 'axios';
 
 export default {
   components: {
@@ -52,6 +53,16 @@ export default {
     }
   },
   methods: {
+    async fetchEvents() {
+            try {
+                const response = await axios.get('api/v1/calendar/', {
+                    headers: { "Authorization": `Token ${this.userToken}` }
+                });
+                this.calendarOptions.event = response.data;
+            } catch (error) {
+                console.error('There was an error fetching the leads:', error);
+            }
+            },
     openAddEventPopup() {
       this.showEventPopup = true;
       this.editMode = false;
