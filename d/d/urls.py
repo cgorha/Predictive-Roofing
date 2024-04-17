@@ -11,8 +11,5 @@ urlpatterns = [
     path('api/v1/hi/', UserDetailAPIView.as_view(), name='myuser-detail'),
     path('leads/', views.LeadListCreate.as_view(), name='lead-list-create'),
     path('leads/<int:pk>/', views.LeadDetail.as_view(), name='lead-detail'),
-    path('messages/', views.send_sms, name='send_sms'),  
-
+    path('api/chat/', include('d.chat.urls')),
 ]
-
-
