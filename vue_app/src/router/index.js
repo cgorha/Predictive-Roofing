@@ -4,6 +4,7 @@ import HomeView from '../views/Home.vue'
 import AddLeadView from '../views/AddLeadView.vue'
 import SignUp from '../views/SignUpView.vue'
 import LogIn from '../views/LogIn.vue'
+import CreateNewMessage from '../components/ModalDialog.vue'
 
 const routes = [
   
@@ -78,7 +79,13 @@ const routes = [
     path: '/sign-up',
     name: 'sign-up',
     component: SignUp,
+  },
+  {
+    path: '/create-new-message',
+    name: 'create-new-message',
+    component: CreateNewMessage,
   }
+
 ]
 
 const router = createRouter({

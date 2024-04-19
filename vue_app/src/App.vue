@@ -33,6 +33,12 @@ import Footer from "@/components/Footer.vue";
 import {mapActions, mapState} from 'vuex';
 
 export default {
+    computed:{
+        isAuthenticated(){
+            return this.$store.getters.isAuthenticated;
+        }
+    },
+
     components: {
         UserProfileOverLay,
         NavigationDropDown,
