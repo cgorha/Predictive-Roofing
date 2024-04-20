@@ -31,7 +31,7 @@ class Conversation(models.Model):
     modified_at = models.DateTimeField(auto_now=True)
 
     def modified_at_formatted(self):
-        return timesince(self.created_at)
+        return timesince(self.modified_at)
 
 class ConversationMessage(models.Model):
     conversation = models.ForeignKey(Conversation, related_name='messages', on_delete=models.CASCADE)
@@ -39,6 +39,6 @@ class ConversationMessage(models.Model):
     sent_to = models.ForeignKey(CustomUser, related_name='received_messages', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(CustomUser, related_name='sent_messages', on_delete=models.CASCADE)
-    
+
     def created_at_formatted(self):
         return timesince(self.created_at)

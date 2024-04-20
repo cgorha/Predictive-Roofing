@@ -43,7 +43,7 @@ export default {
     methods: {
         getLatLngFromZipCode(zipCode) {
             return new Promise((resolve, reject) => {
-                const apiKey = 'AIzaSyDi2ZmGQl1glP7d1LwVYERsqQl1vt9PMYw';
+                const apiKey = '';
                 const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${zipCode}&key=${apiKey}`;
                 console.log(zipCode)
 
@@ -62,7 +62,7 @@ export default {
         },
         loadGoogleMapsScript() {
             return new Promise((resolve, reject) => {
-                const apiKey = 'AIzaSyDi2ZmGQl1glP7d1LwVYERsqQl1vt9PMYw';
+                const apiKey = '';
                 if (window.google && window.google.maps) {
                     resolve();
                 } else {
