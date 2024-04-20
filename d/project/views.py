@@ -19,9 +19,13 @@ from .serializers import UserSerializer, LeadSerializer, calendarEventSerializer
 
 import os
 from django.conf import settings
+from twilio.rest import Client
 from django.http import HttpResponse, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+
 
 User = get_user_model()
+
 class UserDetailAPIView(generics.RetrieveAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = UserSerializer
