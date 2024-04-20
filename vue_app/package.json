@@ -9,6 +9,7 @@
   "dependencies": {
     "@fullcalendar/daygrid": "^6.1.11",
     "@fullcalendar/vue3": "^6.1.11",
+    "@vuepic/vue-datepicker": "^8.5.0",
     "autoprefixer": "^10.4.19",
     "axios": "^1.6.7",
     "bulma": "^0.9.4",
