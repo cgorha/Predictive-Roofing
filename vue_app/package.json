@@ -7,9 +7,9 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
-    "autoprefixer": "^10.4.19",
     "@fullcalendar/daygrid": "^6.1.11",
     "@fullcalendar/vue3": "^6.1.11",
+    "autoprefixer": "^10.4.19",
     "axios": "^1.6.7",
     "bulma": "^0.9.4",
     "bulma-toast": "^2.4.4",
