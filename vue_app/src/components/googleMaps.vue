@@ -20,7 +20,27 @@ export default {
     },
     data() {
         return {
-            map: null
+            map: null,
+            polygons: [
+                {
+                    coords: [
+                        { lat: 36.1314, lng: -79.9048 },
+                        { lat: 36.1314, lng: -79.8302 },
+                        { lat: 36.0959, lng: -79.8302 },
+                        { lat: 36.0959, lng: -79.9048 }
+                    ],
+                    color: '#0000FF'
+                },
+                {
+                    coords: [
+                        { lat: 36.0726, lng: -79.7920 },
+                        { lat: 36.0726, lng: -79.7820 },
+                        { lat: 36.0626, lng: -79.7820 },
+                        { lat: 36.0626, lng: -79.7920 }
+                    ],
+                    color: '#FF0000'
+                }
+            ]
         };
     },
     watch: {
@@ -44,6 +64,7 @@ export default {
         this.loadGoogleMapsScript().then(() => {
             this.initMap().then(() => {
                 this.fetchAndDisplayPins();
+                this.drawPolygons();
             });
         }).catch(error => console.error('Google Maps API script not loaded:', error));
     },
@@ -59,6 +80,19 @@ export default {
                 .catch(error => {
                     throw new Error('No results found: ' + error);
                 });
+        },
+        drawPolygons() {
+            this.polygons.forEach(polygon => {
+                const mapPolygon = new google.maps.Polygon({
+                    paths: polygon.coords,
+                    strokeColor: polygon.color,
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: polygon.color,
+                    fillOpacity: 0.35
+                });
+                mapPolygon.setMap(this.map);
+            });
         },
         loadGoogleMapsScript() {
             return new Promise((resolve, reject) => {
