@@ -4,33 +4,36 @@
       <div class="">
         <div class="columns">
 
-          <!--Loops through the contacts of logged in User-->
-          <div class="column" v-for="conversation in conversations" :key="conversation.id">
-            <template v-for="user in conversation.users">
-              <div class="box" v-if="user.id !== $store.state.user.id" :key="user.id">
-                <div>  
-                  <h1 class="title"> Contacts </h1>
-                  <button class="button is-primary" @click="toggleModal">+ New Conversation</button>
-                </div>
-                  <div class="mt-4">
-                    <ul>
-                      <li class="box" style="cursor: pointer;">
+          <!-- Contacts Section -->
+          <div class="column">
+            <div class="box">
+              <h1 class="title"> Contacts </h1>
+              <button class="button is-primary" @click="toggleModal">+ New Conversation</button>
+              <div class="mt-4">
+                <ul>
+                  <!-- Loop through conversations -->
+                  <template v-for="conversation in conversations" :key="conversation.id">
+                    <template v-for="user in conversation.users">
+                      <!-- Display contacts excluding the current user -->
+                      <li class="box" style="cursor: pointer;" v-if="user.id !== $store.state.user.id" :key="user.id">
                         <div @click="setActiveConversation(conversation.id)">
                           <div>{{ user.username }}</div>
                           <div>{{ conversation.modified_at_formatted }}</div>
                         </div>
                       </li>
-                    </ul>
-                  </div>
+                    </template>
+                  </template>
+                </ul>
               </div>
-            </template>  
+            </div>
           </div>
 
-          <!--Loops through the current active messages-->
+          <!-- Messages Section -->
           <div class="column is-8">
             <div class="box">
               <h1 class="title"> Messages </h1>
               <div style="height: 285px; overflow-y: auto;" ref="messageContainer">
+                <!-- Loop through messages -->
                 <template v-for="message in activeConversation.messages" :key="message.id">
                   <!-- Primary message bubble -->
                   <div class="message is-primary" style="display: flex; align-items: flex-start; margin-bottom: 20px;"
@@ -63,11 +66,12 @@
                   </div>
 
                   <!-- Modal dialog -->
-                  <ModalDialog v-if="showModal"  @message-sent="handleMessageSent" @close="toggleModal" @send="sendMessage"/>
+                  
 
                 </template>
-              </div>
+                <ModalDialog v-if="showModal"  @message-sent="handleMessageSent" @close="toggleModal" @send="sendMessage"/>
 
+              </div>
               <!-- Text input -->
               <div class="hero-footer" style="margin-top: 10px;">
                 <form v-on:submit.prevent="submitForm">
@@ -79,7 +83,6 @@
                   </div>
                 </form>
               </div>
-
             </div>
           </div>
         </div>
@@ -90,7 +93,7 @@
 
 <script>
 import axios from 'axios';
-import ModalDialog from '@/components/ModalDialog.vue'; 
+import ModalDialog from '@/components/ModalDialog.vue';
 
 export default {
   name: 'MessagesView',
@@ -110,67 +113,44 @@ export default {
   },
 
   mounted() {
-    console.log('Active Conversation Messages:', this.activeConversation.messages);
     this.getConversations();
   },
 
   methods: {
 
-    sendDirectMessage() {
-      console.log('Send direct message');
-      axios
-        .get(`/api/chat/get-or-create/${this.$route.params.id}/`, {
-          headers: {
-            'Authorization': `Token ${this.$store.state.userToken}`
-          }
-        })
-        .then(response => {
-          console.log(response.data);
-          this.activeConversation = response.data;
-        })
-        .catch(error => {
-          console.log('error', error);
-        });
+    toggleModal() {
+      this.showModal = !this.showModal;
     },
 
-    setActiveConversation(id){
-      console.log('Set active conversation:', id);
+    setActiveConversation(id) {
       this.activeConversation = id;
       this.getMessages();
     },
 
     async getConversations() {
-      console.log('Get conversations');
       try {
         const response = await axios.get('/api/chat/', {
           headers: {
             'Authorization': `Token ${this.$store.state.userToken}`
           }
         });
-        console.log(response.data);
         this.conversations = response.data;
         if (this.conversations.length) {
           this.activeConversation = this.conversations[0].id;
+          this.getMessages();
         }
-        this.getMessages();
       } catch (error) {
         console.log(error);
       }
     },
 
-    shouldDisplayUser(userId) {
-      return userId !== this.$store.state.user.id;
-    },
-
-    async getMessages(){
-      console.log('Get messages');
+    async getMessages() {
       try {
         const response = await axios.get(`/api/chat/${this.activeConversation}/`, {
           headers: {
             'Authorization': `Token ${this.$store.state.userToken}`
           }
         });
-        console.log(response.data);
         this.activeConversation = response.data;
         this.scrollToBottom();
       } catch (error) {
@@ -179,7 +159,6 @@ export default {
     },
 
     submitForm() {
-      console.log('submitForm', this.body);
       axios
         .post(`/api/chat/${this.activeConversation.id}/send/`, {
           body: this.body
@@ -189,13 +168,13 @@ export default {
           }
         })
         .then(response => {
-          console.log(response.data);
           if (response.data && typeof response.data === 'object' && response.data.id) {
             if (response.data.created_by && response.data.created_by.id === this.$store.state.user.id) {
               if (!Array.isArray(this.activeConversation.messages)) {
                 this.activeConversation.messages = [];
               }
               this.activeConversation.messages.push(response.data);
+              this.scrollToBottom();
             }
           } else {
             console.error('Invalid message data received:', response.data);
@@ -210,17 +189,11 @@ export default {
       this.$refs.messageContainer.scrollTop = this.$refs.messageContainer.scrollHeight;
     },
 
-    toggleModal() {
-      this.showModal = !this.showModal;
-    },
-    
     handleMessageSent(data) {
       // Handle the message sent event
       console.log('Message sent:', data);
       // Update the view or perform any necessary actions
     },
-
-    
   }
 };
 </script>
