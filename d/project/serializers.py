@@ -58,3 +58,29 @@ class ConversationDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Conversation
         fields = ('id','users','modified_at_formatted','messages',)
+
+class ConversationSerializer(serializers.ModelSerializer):
+    users = UserSerializer(read_only=True, many=True)
+    modified_at_formatted = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Conversation
+        fields = ('id', 'users', 'modified_at_formatted')
+
+    def get_modified_at_formatted(self, obj):
+        return obj.modified_at.strftime('%Y-%m-%d %H:%M:%S')  # Format the datetime as a string
+
+class ConversationMessageSerializer(serializers.ModelSerializer):
+    sent_to = UserSerializer(read_only=True)
+    created_by = UserSerializer(read_only=True)
+
+    class Meta:
+        model = ConversationMessage
+        fields = ('id', 'sent_to','created_by','created_at_formatted','body')
+
+class ConversationDetailSerializer(serializers.ModelSerializer):
+    messages = ConversationMessageSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = Conversation
+        fields = ('id','users','modified_at_formatted','messages',)

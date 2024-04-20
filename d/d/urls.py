@@ -16,6 +16,5 @@ urlpatterns = [
     path('api/v1/calendar/', views.calendarEventListCreate.as_view(), name='calendar-list-create'),
     path('api/v1/save/', views.save_pin, name='save_pin'),
     path('api/v1/pins/', views.get_pins, name='get_pins'),
+    path('api/chat/', include('d.chat.urls')),
 ]
-
-

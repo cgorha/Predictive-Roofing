@@ -25,7 +25,6 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 User = get_user_model()
-
 class UserDetailAPIView(generics.RetrieveAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = UserSerializer
