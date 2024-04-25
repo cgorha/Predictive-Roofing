@@ -15,7 +15,7 @@ from rest_framework import status
 from project.models import Lead, calendarEvent, MapPin
 from rest_framework.utils import json
 
-from .serializers import UserSerializer, LeadSerializer, calendarEventSerializer
+from .serializers import UserSerializer, LeadSerializer, CalendarEventSerializer
 
 import os
 from django.conf import settings
@@ -53,20 +53,30 @@ class LeadDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = LeadSerializer
     permission_classes = [IsAuthenticated]
 
-class calendarEventListCreate(generics.ListCreateAPIView):
+class CalendarEventListCreate(generics.ListCreateAPIView):
     queryset = calendarEvent.objects.all()
-    serializer_class = calendarEventSerializer
+    serializer_class = CalendarEventSerializer
     permission_classes = [IsAuthenticated]
+
+    @csrf_exempt
+    def dispatch(self, *args, **kwargs):
+        return super(CalendarEventListCreate, self).dispatch(*args, **kwargs)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
-    class calendarEventListCreate(generics.ListCreateAPIView):
-        serializer_class = calendarEventSerializer
-        permission_classes = [IsAuthenticated]
+class CalendarEventDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = calendarEvent.objects.all()
+    serializer_class = CalendarEventSerializer
+    permission_classes = [IsAuthenticated]
+
+    @csrf_exempt
+    def dispatch(self, *args, **kwargs):
+        return super(CalendarEventDetail, self).dispatch(*args, **kwargs)
 
     def get_queryset(self):
         return calendarEvent.objects.filter(user=self.request.user)
+
 
 def send_sms(request):
     account_sid = settings.TWILIO_ACCOUNT_SID

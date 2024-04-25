@@ -27,11 +27,10 @@ class LeadSerializer(serializers.ModelSerializer):
         fields = ['id', 'user', 'name', 'date', 'phone', 'zip_code', 'insurance_company', 'status']
         read_only_fields = ('user',)
 
-class calendarEventSerializer(serializers.ModelSerializer):
+class CalendarEventSerializer(serializers.ModelSerializer):
     class Meta:
         model = calendarEvent
-        fields = ['id', 'user', 'title', 'start', 'description']
-        read_only_fields = ('user',)
+        fields = ['id', 'title', 'start', 'description']
 
 class ConversationSerializer(serializers.ModelSerializer):
     users = UserSerializer(read_only=True, many=True)
