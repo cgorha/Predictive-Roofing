@@ -1,9 +1,9 @@
 <template>
     <div>
-      <nav class="navbar is-dark">
+      <nav class="navbar is-primary">
         <div class="navbar-brand">
           <a class="navbar-item">
-            <img class="logo" src="../public/logo.png">
+            <img class="logo" src="../public/roof_icon.png">
             Predictive Roofing
           </a>
           <NavigationDropDown :isOpen="isNavigationDropdownOpen" @update:isOpen="isNavigationDropdownOpen = $event"/>
