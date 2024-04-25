@@ -24,19 +24,65 @@ export default {
             polygons: [
                 {
                     coords: [
-                        { lat: 36.1314, lng: -79.9048 },
-                        { lat: 36.1314, lng: -79.8302 },
-                        { lat: 36.0959, lng: -79.8302 },
-                        { lat: 36.0959, lng: -79.9048 }
+                        { lat: 36.1586, lng: -79.9402 },
+                        { lat: 36.1666, lng: -79.9302 },
+                        { lat: 36.1726, lng: -79.9202 },
+                        { lat: 36.1786, lng: -79.9102 },
+                        { lat: 36.1746, lng: -79.9002 },
+                        { lat: 36.1686, lng: -79.8902 },
+                        { lat: 36.1606, lng: -79.9002 },
+                        { lat: 36.1546, lng: -79.9102 },
+                        { lat: 36.1506, lng: -79.9202 },
+                        { lat: 36.1466, lng: -79.9302 }
                     ],
                     color: '#0000FF'
                 },
                 {
                     coords: [
-                        { lat: 36.0726, lng: -79.7920 },
-                        { lat: 36.0726, lng: -79.7820 },
-                        { lat: 36.0626, lng: -79.7820 },
-                        { lat: 36.0626, lng: -79.7920 }
+                        { lat: 36.1126, lng: -79.7901 },
+                        { lat: 36.1206, lng: -79.7821 },
+                        { lat: 36.1286, lng: -79.7701 },
+                        { lat: 36.1346, lng: -79.7601 },
+                        { lat: 36.1386, lng: -79.7501 },
+                        { lat: 36.1366, lng: -79.7401 },
+                        { lat: 36.1306, lng: -79.7501 },
+                        { lat: 36.1226, lng: -79.7601 },
+                        { lat: 36.1166, lng: -79.7701 },
+                        { lat: 36.1106, lng: -79.7801 }
+                    ],
+                    color: '#99CC00'
+                },
+                {
+                    coords: [
+                        { lat: 36.0723, lng: -79.7910 },
+                        { lat: 36.0783, lng: -79.7810 },
+                        { lat: 36.0823, lng: -79.7710 },
+                        { lat: 36.0803, lng: -79.7610 },
+                        { lat: 36.0743, lng: -79.7710 },
+                        { lat: 36.0703, lng: -79.7810 },
+                        { lat: 36.0663, lng: -79.7910 }
+                    ],
+                    color: '#66CC66'
+                },
+                {
+                    coords: [
+                        { lat: 36.0227, lng: -79.8195 },
+                        { lat: 36.0307, lng: -79.8095 },
+                        { lat: 36.0387, lng: -79.7995 },
+                        { lat: 36.0347, lng: -79.7895 },
+                        { lat: 36.0287, lng: -79.7995 },
+                        { lat: 36.0227, lng: -79.8095 }
+                    ],
+                    color: '#339933'
+                },
+                {
+                    coords: [
+                        { lat: 36.0826, lng: -79.6900 },
+                        { lat: 36.0906, lng: -79.6800 },
+                        { lat: 36.0986, lng: -79.6700 },
+                        { lat: 36.0946, lng: -79.6600 },
+                        { lat: 36.0886, lng: -79.6700 },
+                        { lat: 36.0826, lng: -79.6800 }
                     ],
                     color: '#FF0000'
                 }
@@ -44,16 +90,14 @@ export default {
         };
     },
     watch: {
-        zipCode(newVal, oldVal) {
-            if (newVal !== oldVal) {
-                this.getLatLngFromZipCode(newVal).then(coords => {
-                    this.mapOptions.center = coords;
-                    if (this.map) {
-                        this.centerMap(coords.lat, coords.lng);
-                    } else {
-                        this.initMap();
-                    }
-                }).catch(error => console.error('Error getting location from zip code:', error));
+        zipCode: {
+            immediate: true,
+            handler(newVal) {
+                if (newVal) {
+                    this.getLatLngFromZipCode(newVal).then(coords => {
+                        this.initMap(coords);
+                    }).catch(error => console.error('Error getting location from zip code:', error));
+                }
             }
         }
     },
@@ -70,7 +114,7 @@ export default {
     },
     methods: {
         getLatLngFromZipCode(zipCode) {
-            const apiKey = ''; // Your API key here
+            const apiKey = '';
             const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${zipCode}&key=${apiKey}`;
             return axios.get(url)
                 .then(response => {
@@ -89,45 +133,51 @@ export default {
                     strokeOpacity: 0.8,
                     strokeWeight: 2,
                     fillColor: polygon.color,
-                    fillOpacity: 0.35
+                    fillOpacity: 0.35,
+                    clickable: false
                 });
                 mapPolygon.setMap(this.map);
             });
         },
         loadGoogleMapsScript() {
+            const apiKey = ''; // Your API key here
             return new Promise((resolve, reject) => {
-                const apiKey = ''; // Your API key here
                 if (window.google && window.google.maps) {
                     resolve();
                 } else {
                     const script = document.createElement('script');
                     script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initMap`;
                     script.async = true;
+                    script.defer = true;
                     document.head.appendChild(script);
                     window.initMap = () => {
                         resolve();
                         delete window.initMap;
                     };
-                    script.onerror = reject;
+                    script.onerror = () => reject(new Error('Failed to load Google Maps script'));
                 }
             });
         },
-        initMap() {
-            return new Promise(resolve => {
+        initMap(coords) {
+            if (!this.map) {
                 this.map = new google.maps.Map(this.$refs.googleMap, {
                     ...this.mapOptions,
-                    center: this.mapOptions.center,
+                    center: coords,
                 });
                 this.map.addListener('click', this.addMarker);
-                resolve();
-            });
+                this.fetchAndDisplayPins();
+                this.drawPolygons();
+            } else {
+                this.centerMap(coords.lat, coords.lng);
+            }
         },
         addMarker(event) {
             const { lat, lng } = event.latLng.toJSON();
             const marker = new google.maps.Marker({
                 position: { lat, lng },
                 map: this.map,
-                title: "New Pin"
+                title: "New Pin",
+                zIndex: 1000
             });
             this.savePin(lat, lng);
         },
@@ -146,7 +196,8 @@ export default {
             const marker = new google.maps.Marker({
                 position: { lat: pin.latitude, lng: pin.longitude },
                 map: this.map,
-                title: pin.description || "No Description"
+                title: pin.description || "No Description",
+                zIndex: 1000
             });
         },
         savePin(lat, lng) {
