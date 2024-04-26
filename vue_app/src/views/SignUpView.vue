@@ -1,78 +1,109 @@
 <template>
     <div class="page-sign-up">
-      <div class="columns">
-        <div class="column is-4 is-offset-4 box mt-6">
+      <div class="columns is-centered">
+        <div class="column is-7 box mt-6">
+
+        <div class="columns is-vcentered">
+            <div class="column">
+                <h1 class="title is-4 has-text-centered">Redefining the standard,</h1>
+                <h1 class="title is-4 has-text-centered">one roof at a time.</h1>
+                <img src="../../public/sign_up.png" class="image-left" alt="Sign Up Image">
+            </div>
+
+            <div class="column">
+
           <div id="main-content" class="mt-3">
-            <h1 class="has-text-centered">Sign up</h1>
+            <h1 class="has-text-centered">Predictive Roofing</h1>
             <h1 class="mt-2 title has-text-centered">Create New Account</h1>
           </div>
-  
+          
+            <div>
           <form @submit.prevent="submitForm">
   
             <div class="field mt-6">
-              <label>Username</label>
-              <div class="control">
+              <div class="control has-icons-left">
                 <input type="text" class="input" v-model="username" placeholder="Username">
-              </div>
+                <span class="icon is-small is-left">
+                <font-awesome-icon icon="user" />
+                </span>
+                </div>
             </div>
   
             <div class="field">
-              <label>Email</label>
-              <div class="control">
+              <div class="control has-icons-left">
                 <input type="email" class="input" v-model="email" placeholder="Email">
-              </div>
-            </div>
-  
-            <div class="company">
-              <label>Company Name</label>
-              <div class="control">
-                <input type="text" class="input" v-model="companyName" placeholder="Company Name">
+                <span class="icon is-small is-left">
+                <font-awesome-icon icon="envelope" />
+                </span>
               </div>
             </div>
   
             <div class="field">
-              <label>Address</label>
-              <div class="control">
+              <div class="control has-icons-left">
+                <input type="text" class="input" v-model="companyName" placeholder="Company Name">
+                <span class="icon is-small is-left">
+                    <font-awesome-icon icon="building" />
+                </span>
+                </div>
+            </div>
+  
+            <div class="field">
+              <div class="control has-icons-left">
                 <input type="text" class="input" v-model="address" placeholder="Address">
-              </div>
+                <span class="icon is-small is-left">
+                <font-awesome-icon icon="address-card" />
+                </span>
+            </div>
             </div>
   
             <div class="field is-grouped">
               <div class="control is-expanded">
-                <label>City</label>
-                <div class="control">
+                <div class="control has-icons-left">
                   <input type="tel" class="input" v-model="city" placeholder="City">
+                  <span class="icon is-small is-left">
+                    <font-awesome-icon icon="city" />
+                </span>
                 </div>
               </div>
               <div class="control is-expanded">
-                <label>State</label>
-                <div class="control">
+                <div class="control has-icons-left">
                   <input type="text" class="input" v-model="state" placeholder="State">
+                  <span class="icon is-small is-left">
+                    <font-awesome-icon icon="map-location-dot" />
+                </span>
                 </div>
               </div>
             </div>
   
             <div class="field is-grouped">
                 <div class="is-expanded">
-              <label>Zip Code</label>
-              <div class="control">
+              <div class="control has-icons-left">
                 <input type="text" class="input" v-model="zipCode" placeholder="Zip Code">
-              </div>
+                <span class="icon is-small is-left">
+                    <font-awesome-icon icon="location-dot" />
+                </span>
+            </div>
             </div>
             </div>
   
             <div class="field">
               <label>Password</label>
-              <div class="control">
-                <input type="password" class="input" v-model="password" placeholder="Password">
-              </div>
+              <div class="control has-icons-left">
+                <input type="password" class="input" v-model="password" placeholder="Create a password">
+                <span class="icon is-small is-left">
+                    <font-awesome-icon icon="key" />
+                </span>
+            </div>
             </div>
   
             <div class="field">
               <label>Repeat password</label>
-              <div class="control">
+              <div class="control has-icons-left">
                 <input type="password" class="input" v-model="password2" placeholder="Repeat Password">
-              </div>
+                <span class="icon is-small is-left">
+                    <font-awesome-icon icon="key" />
+                </span>
+            </div>
             </div>
   
             <div class="notification is-danger" v-if="errors.length">
@@ -84,6 +115,7 @@
                 <button class="button is-fullwidth is-success">Get Started</button>
               </div>
             </div>
+            
   
             <hr>
             <div class="has-text-centered">
@@ -91,13 +123,17 @@
             </div>
           </form>
         </div>
+        </div>
       </div>
+      </div>
+    </div>
     </div>
   </template>
   
   <script>
   import axios from 'axios'
   import { toast } from 'bulma-toast'
+
   
   export default {
     name: 'SignUp',
@@ -215,5 +251,13 @@
     color: #363636;
     text-decoration: underline;
   }
+
+  .image-left {
+    float: left;
+     margin-right: 20px; /* Adjust this value as needed */
+    }
+
+   
+
   </style>
   
