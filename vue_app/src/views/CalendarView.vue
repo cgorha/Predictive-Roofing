@@ -1,21 +1,43 @@
 <template>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
     <div class="calendar-container">
         <FullCalendar class="calendar" :options="calendarOptions" ref="calendar" />
         <div class="button-container">
-            <button @click="openAddEventPopup">Add Event</button>
-            <button @click="removeSelectedEvent">Remove Event</button>
+            <button class ="button is-primary" @click="openAddEventPopup">Add Event</button>
+            <button class ="button is-primary" @click="removeSelectedEvent">Remove Event</button>
         </div>
-        <div id="eventPopup" class="event-popup" v-if="showEventPopup">
-            <h2>{{ editMode ? 'Edit Event' : 'Add Event' }}</h2>
-            <label for="title">Title:</label><br>
-            <input type="text" id="title" v-model="eventTitle"><br>
-            <label for="time">Time:</label><br>
-            <VueDatePicker v-model="eventTime" :config="datePickerConfig"></VueDatePicker><br>
-            <label for="description">Description:</label><br>
-            <textarea id="description" v-model="eventDescription"></textarea><br><br>
-            <button @click="saveEvent">{{ editMode ? 'Save Changes' : 'Add Event' }}</button>
-            <button v-if="editMode" @click="deleteEvent">Delete</button>
-            <button @click="closeEventPopup">Cancel</button>
+        <div id="eventPopup" class="modal is-active" v-if="showEventPopup">
+            <div class="modal-background"></div>
+            <div class="modal-card">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">{{ editMode ? 'Edit Event' : 'Add Event' }}</p>
+                    <button class="delete" aria-label="close" @click="closeEventPopup"></button>
+                </header>
+                <section class="modal-card-body">
+                    <div class="field">
+                        <label class="label" for="title">Title:</label>
+                        <div class="control">
+                            <input class="input" type="text" id="title" v-model="eventTitle">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label" for="time">Time:</label>
+                        <div class="control">
+                            <VueDatePicker v-model="eventTime" :config="datePickerConfig"></VueDatePicker>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label" for="description">Description:</label>
+                        <div class="control">
+                            <textarea class="textarea" id="description" v-model="eventDescription"></textarea>
+                        </div>
+                    </div>
+                </section>
+                <footer class="modal-card-foot">
+                    <button class="button is-primary" @click="saveEvent">{{ editMode ? 'Save Changes' : 'Add Event' }}</button>
+                    <button class="button" @click="closeEventPopup">Cancel</button>
+                </footer>
+            </div>
         </div>
     </div>
 </template>
@@ -149,6 +171,14 @@ export default {
 </script>
 
 <style>
+.fc-button-primary {
+    background-color: #00d1b2;
+    color: white;
+    border-color: transparent;
+}
+.fc-button-primary:not(:disabled):hover {
+    background-color: #00b89c;
+}
 .calendar-container {
     display: flex;
     flex-direction: column;

@@ -1,27 +1,41 @@
 <template>
-    <div class="navigation-dropdown" @click="toggleDropdown" v-on:click.stop>
+    <div class="sidebar">
         <div class="dropdown" :class="{ 'is-active': dropdownActive }">
-            <div class="dropdown-menu" role="menu">
-                <div class="dropdown-content">
-                    <router-link to="/dashboard" class="dropdown-item">Dashboard</router-link>
-                    <router-link to="/leads" class="dropdown-item">Leads & Jobs</router-link>
-                    <router-link to="/messages" class="dropdown-item">Messages</router-link>
-                    <router-link to="/calendar" class="dropdown-item">Calendar</router-link>
-                    <router-link to="/addLead" class="dropdown-item">Add Lead</router-link>
-                    <router-link to="/settings" class="dropdown-item">Settings</router-link>
-                    <hr class="dropdown-divider">
-                    <a class="dropdown-item" @click.prevent="logout">Log Out</a>
-                </div>
-            </div>
+            <aside class="menu">
+                <ul class="menu-list">
+                    <li>
+                        <router-link to="/dashboard" class="menu-item">Dashboard</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/leads" class="menu-item">Leads & Jobs</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/messages" class="menu-item">Messages</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/calendar" class="menu-item">Calendar</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/addLead" class="menu-item">Add Lead</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/settings" class="menu-item">Settings</router-link>
+                    </li>
+                    <hr class="sidebar-divider" />
+                    <li>
+                        <a class="menu-item" @click.prevent="logout">Log Out</a>
+                    </li>
+                </ul>
+            </aside>
         </div>
     </div>
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import { mapActions } from "vuex";
 
 export default {
-    name: 'NavigationDropDown',
+    name: "SidebarMenu",
     props: {
         isOpen: {
             type: Boolean,
@@ -41,39 +55,35 @@ export default {
     methods: {
         toggleDropdown() {
             this.dropdownActive = !this.dropdownActive;
-            // Emit an event to synchronize state with the parent component
             this.$emit('update:isOpen', this.dropdownActive);
         },
-        ...mapActions(['logout']),
-    }
-}
+        ...mapActions(["logout"]),
+    },
+};
 </script>
 
 <style scoped>
-.navigation-dropdown {
-    position: relative;
-    display: inline-block;
+.sidebar {
+    background-color: #2c3e50;
+    color: #fff;
+    padding: 1rem;
+    height: 100vh;
+    width: 200px;
 }
 
-.navbar-item.has-cursor-pointer {
-    cursor: pointer;
+.menu-item {
+    color: #fff;
+    display: block;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
 }
 
-.dropdown-content {
-    background-color: #363636;
-    color: #f5f5f5;
+.menu-item:hover {
+    background-color: #34495e;
 }
 
-.dropdown-item {
-    color: #f5f5f5;
+.sidebar-divider {
+    border-color: #d3d3d3;
+    margin: 0.5rem 0;
 }
-
-.dropdown-item:hover {
-    background-color: #4a4a4a;
-}
-
-.dropdown-divider {
-    border-color: #555555;
-}
-
 </style>

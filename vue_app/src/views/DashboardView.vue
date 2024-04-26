@@ -1,9 +1,7 @@
 <template>
     <div class="dashboard-container">
         <section class="welcome-section">
-            <h1>Welcome back, <strong>{{ userName }}</strong></h1>
-            <p>Hi {{ userZipCode }}</p>
-            <p>Here's an overview of your day:</p>
+            <h1>Welcome back to Predictive Roofing, <strong>{{ userName }}</strong></h1>
         </section>
 
         <section class="tasks-section">
@@ -19,6 +17,7 @@
 
         <section class="map-section">
             <h1><strong>Hail Swath and Canvassing Record:</strong></h1>
+            <p>Click a location that you have already visited to drop a pin.</p>
             <div class="google-map-container">
                 <GoogleMaps :zipCode="userZipCode" :mapOptions="{ zoom: 10, center: { lat: -33.8688, lng: 151.2093 } }"/>
             </div>
@@ -92,50 +91,36 @@ export default {
 
 <style scoped>
 .dashboard-container {
-    max-width: 800px;
-    margin: 0 auto;
+    max-width: 960px;
+    margin: 20px auto;
+    background: #ffffff;
     padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
 }
 
-.welcome-section h1, .tasks-section h2, .map-section h2 {
-    margin-bottom: 10px;
-    color: #333;
+.welcome-section h1 {
+    color: #4a4a4a;
+    font-size: 24px;
 }
 
-.task-cards {
-    display: flex;
-    flex-direction: column;
+.tasks-section h2, .map-section h1 {
+    color: #363636;
+    font-size: 20px;
+    margin-bottom: 15px;
 }
 
 .task-card {
-    background: #f2f2f2;
-    margin-bottom: 8px;
-    padding: 10px;
-    border-radius: 4px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease-in-out;
-}
-
-.task-card:hover {
-    transform: translateY(-3px);
-}
-
-.task-time {
-    font-size: 16px;
-    font-weight: bold;
-}
-
-.task-desc {
-    font-size: 14px;
-}
-
-.task-location {
-    font-size: 14px;
-    color: #666;
+    background: #fff;
+    border-left: 5px solid #3273dc;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .google-map-container {
     height: 400px;
-    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
 }
 </style>

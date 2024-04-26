@@ -1,4 +1,5 @@
 <template>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
     <div class="container">
         <form @submit.prevent="addLead" class="box">
                 <div class="field">
@@ -44,7 +45,7 @@
                     </div>
                     <div class="field">
                         <div class="control">
-                            <button class="button">Add Lead</button>
+                            <button class="button is-primary">Add Lead</button>
                         </div>
                     </div>
 
