@@ -86,7 +86,6 @@
                                 </div>
                                 
                                 <div class="field">
-                                    <label>Password</label>
                                     <div class="control has-icons-left">
                                         <input type="password" class="input" v-model="password" placeholder="Create a password">
                                         <span class="icon is-small is-left">
@@ -96,7 +95,6 @@
                                 </div>
                                 
                                 <div class="field">
-                                    <label>Repeat password</label>
                                     <div class="control has-icons-left">
                                         <input type="password" class="input" v-model="password2" placeholder="Repeat Password">
                                         <span class="icon is-small is-left">
@@ -227,9 +225,7 @@
     color: #363636;
   }
   
-  .input {
-    border-color: #363636;
-  }
+
   
   .button.is-dark {
     background-color: #363636;
