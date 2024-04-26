@@ -2,6 +2,7 @@
     <div class="dashboard-container">
         <section class="welcome-section">
             <h1>Welcome back, <strong>{{ userName }}</strong></h1>
+            <p>Hi {{ userZipCode }}</p>
             <p>Here's an overview of your day:</p>
         </section>
 
@@ -46,6 +47,7 @@ export default {
             userZipCode: state => state.user.zip_code || '',
             userToken: state => state.userToken
         }),
+
     },
     created() {
         this.fetchUser().then(() => {
