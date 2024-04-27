@@ -77,31 +77,25 @@ class CalendarEventDetail(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         return calendarEvent.objects.filter(user=self.request.user)
 
-
-def send_sms(request):
-    account_sid = settings.TWILIO_ACCOUNT_SID
-    auth_token = settings.TWILIO_AUTH_TOKEN
-    twilio_phone_number = settings.TWILIO_PHONE_NUMBER
-
-    message_body = request.POST.get('message')
-    to_phone_number = request.POST.get('to_phone_number')
-    client = Client(account_sid,auth_token)
-
+@api_view(['GET', 'PUT'])
+@permission_classes([IsAuthenticated])
+def lead_edit(request, pk):
     try:
-        message = client.messages.create(
-            body=message_body,
-            from_=twilio_phone_number,
-            to=to_phone_number
-        )
+        lead = Lead.objects.get(pk=pk)
+    except Lead.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
-        print(message.sid)
-        return HttpResponse("SMS sent successfully")
-    except Exception as e:
-        # Return error response if sending SMS fails
-        return HttpResponse(f"Error: {str(e)}", status=500)
-    else:
-        # Return error response if method is not POST
-        return HttpResponse("Only POST requests are allowed", status=405)
+    if request.method == 'GET':
+        serializer = LeadSerializer(lead)
+        return Response(serializer.data)
+
+    elif request.method == 'PUT': 
+        serializer = LeadSerializer(lead, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @require_POST
 @csrf_exempt
