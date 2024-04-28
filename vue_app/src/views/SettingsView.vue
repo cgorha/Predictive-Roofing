@@ -5,8 +5,8 @@
     <div class="settings-container">
 
         <div class="settings-section">
-            <h2>Notification Settings</h2>
-            <label for="emailNotifications">Email Notifications:</label>
+            <h2 class="subtitle">Notification Settings</h2>
+            <label for="emailNotifications">Email Notifications: </label>
             <input type="checkbox" v-model="emailNotifications">
         </div>
         <div class="settings-section">
@@ -15,12 +15,12 @@
         </div>
         <div class="settings-section">
             <h2>Theme Settings</h2>
-            <label for="darkMode">Dark Mode:</label>
+            <label for="darkMode">Dark Mode: </label>
             <input type="checkbox" v-model="darkMode">
         </div>
         <div class="settings-section">
             <h2>Language Settings</h2>
-            <label for="language">Language:</label>
+            <label for="language">Language: </label>
             <select v-model="language">
                 <option value="en">English</option>
                 <option value="fr">French</option>
@@ -61,8 +61,7 @@ export default {
     height: 300px;
     margin: auto;
     padding: 20px;
-    background-color: lightgray;
-    border: 5px solid blue;
+    background-color: rgb(240, 240, 240);
     border-radius: 20px;
 
 
@@ -78,7 +77,7 @@ export default {
 }
 
 .save-button {
-    background-color: grey;
+    background-color: rgb(69, 202, 160);
     color: white;
     padding: 10px 20px;
     border: none;

@@ -1,56 +1,55 @@
 <template>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
     <div class="container">
         <form @submit.prevent="addLead" class="box">
-                <div class="field">
-                        <label>Name</label>
-                        <div class="control">
-                            <input v-model="newLead.name" placeholder="Name" required>
-                        </div>
-                    </div>
-                    <div class="phoneNumber">
-                          <label>Phone Number</label>
-                          <div class="control">
-                              <input v-model="newLead.phone" placeholder="Phone" required>
-                          </div>
-                    </div>
-
-                    <div class="field">
-                        <label>Date</label>
-                        <div class="control">
-                            <input v-model="newLead.date" type="date" placeholder="Date" required>
-                        </div>
-                    </div>
-
-                    <div class="field">
-                        <label>Zip Code</label>
-                        <div class="control">
-                            <input v-model="newLead.zip_code" placeholder="Zip Code" required>
-                        </div>
-                    </div>
-
-                    <div class="field">
-                        <label>Insurance Company</label>
-                        <div class="control">
-                            <input v-model="newLead.insurance_company" placeholder="Insurance Company" required>
-                        </div>
-                    </div>
-
-                    <div class="field">
-                        <select v-model="newLead.status" required>
-                            <option value="Pending">Pending</option>
-                            <option value="In Progress">In Progress</option>
-                            <option value="Completed">Completed</option>
-                         </select>
-                    </div>
-                    <div class="field">
-                        <div class="control">
-                            <button class="button is-primary">Add Lead</button>
-                        </div>
-                    </div>
-
-                    <hr>
-            </form>
+            <div class="field">
+                <label>Name</label>
+                <div class="control">
+                    <input v-model="newLead.name" placeholder="Name" required>
+                </div>
+            </div>
+            <div class="phoneNumber">
+                <label>Phone Number</label>
+                <div class="control">
+                    <input v-model="newLead.phone" placeholder="Phone" required>
+                </div>
+            </div>
+            
+            <div class="field">
+                <label>Date</label>
+                <div class="control">
+                    <input v-model="newLead.date" type="date" placeholder="Date" required>
+                </div>
+            </div>
+            
+            <div class="field">
+                <label>Zip Code</label>
+                <div class="control">
+                    <input v-model="newLead.zip_code" placeholder="Zip Code" required>
+                </div>
+            </div>
+            
+            <div class="field">
+                <label>Insurance Company</label>
+                <div class="control">
+                    <input v-model="newLead.insurance_company" placeholder="Insurance Company" required>
+                </div>
+            </div>
+            
+            <div class="field">
+                <select v-model="newLead.status" required>
+                    <option value="Pending">Pending</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                </select>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <button class="button is-primary">Add Lead</button>
+                </div>
+            </div>
+            
+            <hr>
+        </form>
     </div>
 </template>
 <script>

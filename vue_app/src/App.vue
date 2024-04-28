@@ -1,11 +1,8 @@
 <template>
     <div>
-        <nav class="navbar is-primary">
+      <nav class="navbar is-primary">
             <div class="navbar-brand">
-                <a class="navbar-item">
-                    <img class="logo" src="../public/roof_icon.png" />
-                    Predictive Roofing
-                </a>
+              <router-link to="/" class="navbar-item predictive-roof-font ml-4">Predictive Roofing</router-link>
             </div>
 
             <div id="main-navbar" class="navbar-menu">
@@ -113,4 +110,9 @@
     color: #fff;
     padding: 20px 0;
 }
+
+.predictive-roof-font{
+  font-size: larger;
+}
+
 </style>
